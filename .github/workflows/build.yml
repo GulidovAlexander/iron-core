@@ -11,6 +11,7 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneLinux64
+          - StandaloneWindows64
 
     steps:
       - uses: actions/checkout@v4
