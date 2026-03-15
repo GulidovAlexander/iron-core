@@ -1,0 +1,99 @@
+# This .gitignore file should be placed at the root of your Unity project directory
+# Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
+
+# Standard Unity ignores
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+.utmp/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Visual Studio
+.vs/
+*.swp
+*.swo
+*~
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.opendb
+*.VC.db
+
+# Mono
+mono_crash.*
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Blender files
+*.blend1
+*.blend1.meta
+
+# JetBrains Rider
+/[Aa]ssets/Plugins/Editor/JetBrains*
+*.DotSettings.user
+
+# Gradle
+.gradle/
+
+# Crash reports
+sysinfo.txt
+/crashlytics*
+/crash_report.xml
+
+# Test files
+InitTestScene*.unity*
+
+# Addressables
+/ServerData
+/[Aa]ssets/StreamingAssets/aa*
+/[Aa]ssets/AddressableAssetsData/link.xml*
+/[Aa]ssets/Addressables_Temp*
+/[Aa]ssets/AddressableAssetsData/*/*.bin*
+
+# Visual Scripting
+/[Aa]ssets/Unity.VisualScripting.Generated/
+
+# Crashlytics
+crashlytics-build.properties
+
+# --- ДОБАВЛЕНО ДЛЯ 3D ИГРЫ ---
+# Бэкапы ассетов
+*.backup
+*.bak
+
+# Профилирование
+*.profiler
+*.heap
+
+# Плагины (бинарные, если не используете LFS)
+/Assets/Plugins/x86/
+/Assets/Plugins/x86_64/
+
+# Временные большие файлы
+*.cubemap
+*.lightprobe
+*.lighting
