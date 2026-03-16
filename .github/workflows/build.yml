@@ -1,9 +1,12 @@
-name: Build project
+name: Build and Release
 
-on: [push, pull_request]
+on:
+  push:
+    tags:
+      - "v*" # триггер только на теги типа v1.0.0
 
 jobs:
-  buildForAllSupportedPlatforms:
+  build:
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
@@ -34,7 +37,33 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           unityVersion: 6000.3.10f1
 
+      - name: Zip build
+        run: |
+          cd build/${{ matrix.targetPlatform }}
+          zip -r ../../${{ matrix.targetPlatform }}.zip .
+
       - uses: actions/upload-artifact@v4
         with:
           name: Build-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
+          path: ${{ matrix.targetPlatform }}.zip
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          files: |
+            Build-StandaloneWindows64/*.zip
+            Build-StandaloneLinux64/*.zip
