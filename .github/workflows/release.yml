@@ -17,7 +17,7 @@ jobs:
       new_release_git_tag: ${{ steps.release.outputs.new_release_git_tag }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -62,7 +62,7 @@ jobs:
           - StandaloneLinux64
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           lfs: true
