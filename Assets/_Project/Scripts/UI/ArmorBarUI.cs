@@ -1,27 +1,26 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.Components.Health
 {
-    public class HealthBarUI : MonoBehaviour
+    public class ArmorBarUI : MonoBehaviour
     {
         [SerializeField] private Slider slider;
-        [SerializeField] private HealthComponent health;
+        [SerializeField] private ArmorComponent armor;
 
         private void Awake()
         {
-            health.OnHealthChanged += UpdateBar;
+            armor.OnArmorChanged += UpdateBar;
         }
 
         private void Start()
         {
-            slider.value = health.HealthPercentage;
+            slider.value = armor.ArmorPercentage;
         }
 
         private void OnDestroy()
         {
-            health.OnHealthChanged -= UpdateBar;
+            armor.OnArmorChanged -= UpdateBar;
         }
 
         private void UpdateBar(float current, float max)

@@ -8,11 +8,11 @@ namespace Player.Scripts
         [Header("Movement Settings")]
         [SerializeField] private float walkSpeed = 5f;
         [SerializeField] private float sprintSpeed = 8f;
-        [SerializeField] private float jumpForce = 6.5f;
-        [SerializeField] private float gravity = -15f;  // Увеличил гравитацию
-        
+        [SerializeField] private float jumpForce = 4f;      // было 6.5f — меньше высота
+        [SerializeField] private float gravity = -20f;       // было -15f — сильнее тянет вниз
+
         [Header("Gravity Settings")]
-        [SerializeField] private float fallMultiplier = 2.5f;
+        [SerializeField] private float fallMultiplier = 4f;  // было 2.5f — быстрее падение
         
         [Header("Ground Check")]
         [SerializeField] private Transform groundCheck;
@@ -104,9 +104,8 @@ namespace Player.Scripts
                 velocity.y += gravity * Time.deltaTime;
             }
             
-            // Ограничиваем максимальную скорость падения
-            if (velocity.y < -20f)
-                velocity.y = -20f;
+            if (velocity.y < -40f)
+                velocity.y = -40f;
             
             controller.Move(velocity * Time.deltaTime);
         }

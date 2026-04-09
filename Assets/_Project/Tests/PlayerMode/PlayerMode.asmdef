@@ -1,10 +1,8 @@
 {
     "name": "PlayerMode",
-    "rootNamespace": "",
+    "rootNamespace": "Game",
     "references": [
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
-        "NewAssembly"
+        "UnityEngine.TestRunner"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

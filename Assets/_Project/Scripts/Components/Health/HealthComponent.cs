@@ -1,10 +1,9 @@
 using System;
-using Game.Core.Interfaces;
 using UnityEngine;
 
 namespace Game.Components.Health
 {
-    public class HealthComponent : MonoBehaviour, IDamageable
+    public class HealthComponent : MonoBehaviour
     {
         private const float MinHealth = 1f;
         
@@ -18,6 +17,7 @@ namespace Game.Components.Health
         public float MaxHealth => maxHealth;
         public float HealthPercentage => currentHealth / maxHealth;
         public bool IsDead => currentHealth <= 0f;
+        public bool IsFullHealth => currentHealth >= maxHealth;
 
         private void Awake() => Initialize(maxHealth);
         

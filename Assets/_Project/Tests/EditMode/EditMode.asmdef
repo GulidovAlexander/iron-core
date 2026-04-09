@@ -1,10 +1,9 @@
 {
     "name": "Tests.EditMode",
-    "rootNamespace": "",
+    "rootNamespace": "Game",
     "references": [
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
-        "NewAssembly"
+        "Game.Scripts"
     ],
     "includePlatforms": [
         "Editor"
