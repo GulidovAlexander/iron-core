@@ -5,6 +5,7 @@ namespace Game.Scripts.Core.DataStructs
         Physical,
         Fire,
         Magic,
-        Poison
+        Poison,
+        Explosion
     }
 }

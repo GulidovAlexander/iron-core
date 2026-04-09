@@ -9,5 +9,5 @@ namespace Game.Scripts.Components.Player
         [SerializeField] private LayerMask groundMask;
 
         public bool IsGrounded { get; private set; }
-
+    }
 }

@@ -1,10 +1,11 @@
 using Game.Scripts.Core.Movement;
+using Player.Scripts;
 using UnityEngine;
 
 namespace Game.Scripts.Components.Player
 {
     [RequireComponent(typeof(CharacterController))]
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
         [Header("Movement Settings")]
         [SerializeField] private float walkSpeed = 5f;
@@ -19,45 +20,31 @@ namespace Game.Scripts.Components.Player
         [Header("References")]
         [SerializeField] private Transform cameraTransform;
 
+        private PlayerCharacterBrain brain;
         private Mover mover;
-        private PlayerInputHandler input;
 
         private void Awake()
         {
             var controller = GetComponent<CharacterController>();
-            input = GetComponent<PlayerInputHandler>();
-            mover = new Mover(controller);
+            var input = GetComponent<PlayerInputHandler>();
 
-            if (cameraTransform == null)
-                Debug.LogWarning("PlayerMovement: cameraTransform not assigned!", this);
+            mover = new Mover(controller);
+            brain = new PlayerCharacterBrain(
+                mover, input, cameraTransform,
+                walkSpeed, sprintSpeed, jumpForce);
+
+            brain.Initialization();
+            brain.Enable();
         }
 
         private void Update()
         {
-            bool isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            bool isGrounded = Physics.CheckSphere(
+                groundCheck.position, groundDistance, groundMask);
+
             mover.UpdateGrounded(isGrounded);
             mover.Tick(Time.deltaTime);
-
-            if (input.GetJumpPressed())
-                mover.RequestJump(jumpForce);
-
-            Vector3 moveDirection = GetMoveDirection();
-            float speed = input.SprintHeld ? sprintSpeed : walkSpeed;
-            mover.Update(moveDirection, speed, Time.deltaTime);
-        }
-
-        private Vector3 GetMoveDirection()
-        {
-            if (cameraTransform == null) return Vector3.zero;
-
-            Vector3 forward = cameraTransform.forward;
-            Vector3 right = cameraTransform.right;
-            forward.y = 0f;
-            right.y = 0f;
-            forward.Normalize();
-            right.Normalize();
-
-            return forward * input.MoveInput.y + right * input.MoveInput.x;
+            brain.Tick(Time.deltaTime);
         }
 
         private void OnDrawGizmosSelected()
