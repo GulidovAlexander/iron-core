@@ -1,3 +1,4 @@
+using Game.Scripts.Core;
 using UnityEngine;
 
 namespace Player.Scripts
@@ -10,9 +11,6 @@ namespace Player.Scripts
         [SerializeField] private float gamepadSensitivity = 150f;
         [SerializeField] private bool invertY = false;
         [SerializeField] private float maxLookAngle = 80f;
-        
-        [Header("Runtime")]
-        [SerializeField] private bool cursorLocked = true;
         
         private PlayerInputHandler input;
         private float xRotation = 0f;
@@ -36,7 +34,7 @@ namespace Player.Scripts
         
         private void Start()
         {
-            LockCursor(true);
+            CursorManager.Instance.Lock();
         }
         
         private void Update()
@@ -72,26 +70,6 @@ namespace Player.Scripts
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         }
         
-        public void LockCursor(bool locked)
-        {
-            cursorLocked = locked;
-            
-            if (locked)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-        }
-        
-        public void ToggleCursor()
-        {
-            LockCursor(!cursorLocked);
-        }
         
         public void SetSensitivity(float newSensitivity)
         {

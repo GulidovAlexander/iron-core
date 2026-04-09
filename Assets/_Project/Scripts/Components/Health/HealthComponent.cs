@@ -47,5 +47,11 @@ namespace Game.Components.Health
             currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
             OnHealthChanged?.Invoke(currentHealth, maxHealth);
         }
+
+        public void Revive()
+        {
+            currentHealth = maxHealth;
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        }
     }
 }
