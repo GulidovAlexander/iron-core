@@ -97,3 +97,4 @@ crashlytics-build.properties
 *.cubemap
 *.lightprobe
 *.lighting
+/.idea
