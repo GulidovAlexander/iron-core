@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Game.Scripts.Common.Enums;
 using UnityEngine;
 
 namespace Game.Scripts.Core
@@ -5,38 +7,48 @@ namespace Game.Scripts.Core
     public class CursorManager : MonoBehaviour
     {
         public static CursorManager Instance { get; private set; }
-
-        private bool isLocked;
+        
+        private HashSet<CursorUnlockRequester> unlockRequests = new HashSet<CursorUnlockRequester>();
+        
+        public bool HasRequest(CursorUnlockRequester requester) => unlockRequests.Contains(requester);
 
         private void Awake()
         {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
         private void OnApplicationFocus(bool hasFocus)
         {
-            if (!hasFocus)
-                Unlock();
+            if(!hasFocus) 
+                ApplyState();
             else
-                SetCursor(isLocked);
+                ApplyState();
         }
 
-        public void Lock()
+        public void RequestLock(CursorUnlockRequester requester)
         {
-            isLocked = true;
-            SetCursor(true);
+            unlockRequests.Remove(requester);
+            ApplyState();
+        }
+        
+        public void RequestUnlock(CursorUnlockRequester requester)
+        {
+            unlockRequests.Add(requester);
+            ApplyState();
         }
 
-        public void Unlock()
+        private void ApplyState()
         {
-            isLocked = false;
-            SetCursor(false);
-        }
-
-        private void SetCursor(bool locked)
-        {
-            Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
-            Cursor.visible = !locked;
+            var shouldUnlock = unlockRequests.Count > 0;
+            Cursor.lockState = shouldUnlock ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = shouldUnlock;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Game.Components.Health
                 Debug.LogError("[DamageReceiver] Health component not found", this);
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         public void TakeDamage(DamageData damage)
         {
             if(IsDead) return;

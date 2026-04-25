@@ -1,5 +1,4 @@
 using Game.Scripts.Core.Movement;
-using Player.Scripts;
 using UnityEngine;
 
 namespace Game.Scripts.Components.Player

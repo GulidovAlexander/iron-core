@@ -27,6 +27,7 @@ namespace Game.Scripts.Components.Explosion
             }
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private void ApplyDamage(Collider hit, GameObject source, float falloff)
         {
             if (!hit.TryGetComponent(out IDamageable damageable)) return;
@@ -39,7 +40,7 @@ namespace Game.Scripts.Components.Explosion
             if (rb.isKinematic) return;
 
             var direction = (hit.transform.position - transform.position).normalized;
-            rb.AddForce(direction * knockbackForce * falloff, ForceMode.Impulse);
+            rb.AddForce(direction * (knockbackForce * falloff), ForceMode.Impulse);
         }
         
         private float CalculateFalloff(Vector3 position)

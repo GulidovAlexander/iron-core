@@ -1,3 +1,4 @@
+using System;
 using MyGame.Input;
 using UnityEngine;
 
@@ -8,6 +9,16 @@ public class PlayerInputHandler : MonoBehaviour
     public bool JumpPressed { get; private set; }
     public bool SprintHeld { get; private set; }
     public bool InteractPressed { get; private set; }
+    public bool FireHeld { get; private set; }
+    public bool ReloadPressed { get; private set; }
+   
+
+    public event Action<int> OnWeaponSwitch;
+    
+    public event Action OnMenuPressed;
+    public event Action OnFireStarted;
+    public event Action OnFireStopped;
+    public event Action OnReloadPressed;
     
     private GameControls controls;
     
@@ -29,11 +40,35 @@ public class PlayerInputHandler : MonoBehaviour
         controls.Gameplay.Jump.performed += ctx => JumpPressed = true;
         controls.Gameplay.Jump.canceled += ctx => JumpPressed = false;
         
-        // controls.Gameplay.Sprint.performed += ctx => SprintHeld = true;
-        // controls.Gameplay.Sprint.canceled += ctx => SprintHeld = false;
-        //
-        // controls.Gameplay.Interact.performed += ctx => InteractPressed = true;
-        // controls.Gameplay.Interact.canceled += ctx => InteractPressed = false;
+        controls.Gameplay.Menu.performed += ctx => OnMenuPressed?.Invoke();
+        
+        controls.Gameplay.Sprint.performed += ctx => SprintHeld = true;
+        controls.Gameplay.Sprint.canceled += ctx => SprintHeld = false;
+        
+        controls.Gameplay.Interact.performed += ctx => InteractPressed = true;
+        controls.Gameplay.Interact.canceled += ctx => InteractPressed = false;
+
+        controls.Gameplay.Fire.performed += ctx =>
+        {
+            FireHeld = true;
+            OnFireStarted?.Invoke();
+        };
+        controls.Gameplay.Fire.canceled += ctx =>
+        {
+            FireHeld = false;
+            OnFireStopped?.Invoke();
+        };
+        
+        controls.Gameplay.Reload.performed += ctx => 
+        {
+            ReloadPressed = true;
+            OnReloadPressed?.Invoke();
+        };
+        controls.Gameplay.Reload.canceled += ctx => ReloadPressed = false;
+        
+        controls.Gameplay.Weapon1.performed += ctx => OnWeaponSwitch?.Invoke(0);
+        controls.Gameplay.Weapon2.performed += ctx => OnWeaponSwitch?.Invoke(1);
+        controls.Gameplay.Weapon3.performed += ctx => OnWeaponSwitch?.Invoke(2);
     }
     
     private void OnDisable()
@@ -60,4 +95,12 @@ public class PlayerInputHandler : MonoBehaviour
         }
         return false;
     }
+
+    public bool GetReloadPressed()
+    {
+        if (!ReloadPressed) return false;
+        ReloadPressed = false;
+        return true;
+    }
 }
+
