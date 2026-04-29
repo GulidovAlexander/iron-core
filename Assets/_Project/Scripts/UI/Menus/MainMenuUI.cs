@@ -1,31 +1,48 @@
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Game.Scripts.UI.Menus
 {
     public class MainMenuUI : MonoBehaviour
     {
-        private VisualElement rootUiDocument;
-
-        private Button newGameButton;
+        [SerializeField] private Button newGameButton;
+        [SerializeField] private Button settingsButton;
+        [SerializeField] private Button exitButton;
 
         private void Start()
         {
-            rootUiDocument = GetComponent<UIDocument>().rootVisualElement;
-
-            newGameButton = rootUiDocument.Q<Button>("NewGame");
-
-            newGameButton.RegisterCallback<ClickEvent>(NewGameButtonClicked);
+            newGameButton.onClick.AddListener(NewGameButtonClicked);
+            settingsButton.onClick.AddListener(SettingsButtonClicked);
+            exitButton.onClick.AddListener(ExitButtonClicked);
         }
-
+      
         private void OnDestroy()
         {
-            newGameButton.UnregisterCallback<ClickEvent>(NewGameButtonClicked);
+            newGameButton.onClick.RemoveListener(NewGameButtonClicked);
+            settingsButton.onClick.RemoveListener(SettingsButtonClicked);
+            exitButton.onClick.RemoveListener(ExitButtonClicked);
         }
 
-        private void NewGameButtonClicked(ClickEvent evt)
+        private void NewGameButtonClicked()
         {
-            Debug.Log("New Game");
+            SceneLoader.Instance.LoadScene("_Test");
+            
+        }
+        
+        private void ExitButtonClicked()
+        {
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                Application.Quit();
+            #endif
+        }
+
+        private void SettingsButtonClicked()
+        {
+            SceneLoader.Instance.LoadScene("Settings");
         }
     }
 }

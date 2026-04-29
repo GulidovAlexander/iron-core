@@ -18,6 +18,7 @@ namespace Game.Scripts.UI.Theme
         public static readonly Color32 TextPressed    = new(255, 33, 53, 255);  // #FF2135
         public static readonly Color32 TextFocus      = new(255, 255, 255, 255);// #FFFFFF
         public static readonly Color32 TextDisabled   = new(85, 92, 106, 102);  // #555C6A 40%
+        public static readonly Color32 TextWhite = new(255, 255, 255, 255);  // #FFFFFF
 
         // ── Button ────────────────────────────────
         public const float ButtonPaddingX = 20f;

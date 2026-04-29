@@ -1,5 +1,6 @@
 using System.Collections;
 using Game.Scripts.UI.Theme;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -13,17 +14,20 @@ namespace Game.Scripts.UI.Component
     {
         [SerializeField] private Image _fillImage;
         [SerializeField] private float _duration = 0.2f;
-        [SerializeField] private HorizontalLayoutGroup _layout;
+        [SerializeField] private HorizontalLayoutGroup _content;
         [SerializeField] private LayoutElement _layoutElement;
+        [SerializeField] private TextMeshProUGUI _text;
 
         private Coroutine _animation;
 
         private void Awake()
         {
+            _text.color = UITheme.TextWhite;
+            
             _fillImage.color     = UITheme.AccentDim;
             _fillImage.fillAmount = 0f;
 
-            _layout.padding = new RectOffset(
+            _content.padding = new RectOffset(
                 (int)UITheme.ButtonPaddingX,
                 (int)UITheme.ButtonPaddingX,
                 (int)UITheme.ButtonPaddingY,

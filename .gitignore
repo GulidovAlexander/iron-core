@@ -98,3 +98,7 @@ crashlytics-build.properties
 *.lightprobe
 *.lighting
 /.idea
+
+# Mono crash dumps
+mono_crash*
+*.blob
